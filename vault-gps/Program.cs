@@ -9,7 +9,9 @@ var app = builder.Build();
 
 var configure = builder.Configuration;
 
-builder.Services.AddDatabaseConfigs(configure);
+builder.Services
+    .AddDatabaseConfigs(configure)
+    .AddDatabase();
 
 if (app.Environment.IsDevelopment())
 {

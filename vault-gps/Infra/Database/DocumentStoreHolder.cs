@@ -1,10 +1,11 @@
 using Microsoft.Extensions.Options;
 using Raven.Client.Documents;
+using vault_gps.Infra.Database.Contracts;
 using vault_gps.Infra.Database.Options;
 
 namespace vault_gps.Infra.Database;
 
-public class DocumentStoreHolder
+public class DocumentStoreHolder: IDocumentStoreHolder
 {
     private DatabaseOptions _options;
     
@@ -13,7 +14,7 @@ public class DocumentStoreHolder
         _options = options is not null ? options.Value : new DatabaseOptions();
     }
 
-    private IDocumentStore CreateStore()
+    public IDocumentStore CreateStore()
     {
         IDocumentStore store = new DocumentStore()
         {
