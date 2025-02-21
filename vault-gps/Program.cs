@@ -11,7 +11,9 @@ var configure = builder.Configuration;
 
 builder.Services
     .AddDatabaseConfigs(configure)
-    .AddDatabase();
+    .AddDatabase()
+    .AddRepositories()
+    .AddServices();
 
 if (app.Environment.IsDevelopment())
 {
