@@ -27,6 +27,9 @@
       <_ContentIncludedByDefault Remove="Application\obj\project.assets.json" />
       <_ContentIncludedByDefault Remove="Application\obj\project.packagespec.json" />
       <_ContentIncludedByDefault Remove="Contracts\Properties\launchSettings.json" />
+      <_ContentIncludedByDefault Remove="Domain\obj\Domain.csproj.nuget.dgspec.json" />
+      <_ContentIncludedByDefault Remove="Domain\obj\project.assets.json" />
+      <_ContentIncludedByDefault Remove="Domain\obj\project.packagespec.json" />
     </ItemGroup>
 
 </Project>

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("vault-gps")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c00c5c5757cd0b32e90552257d6d209d09a15cc7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+04c970efebf4487e152c99730c7f1b6dadd9d499")]
 [assembly: System.Reflection.AssemblyProductAttribute("vault-gps")]
 [assembly: System.Reflection.AssemblyTitleAttribute("vault-gps")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
