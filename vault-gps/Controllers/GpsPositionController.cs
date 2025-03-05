@@ -16,6 +16,7 @@ public class GpsPositionController: ControllerBase
         _service = service;
     }
     
+    [HttpPost]
     public async Task<IActionResult> PostPosition([FromBody] CreateGpsPositionCommand command)
     {
         var position = await _service.saveGpsPosition((GpsPositionItem)command);
