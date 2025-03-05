@@ -10,7 +10,7 @@ public class GpsPositionService: IGpsPositionService
 
     public GpsPositionService(IGpsPositionRepository repository)
     {
-        _repository = _repository ?? throw new ArgumentNullException(nameof(IGpsPositionRepository));
+        _repository = repository ?? throw new ArgumentNullException(nameof(IGpsPositionRepository));
     }
     
     public async Task<GpsPositionItem> saveGpsPosition(GpsPositionItem item)
