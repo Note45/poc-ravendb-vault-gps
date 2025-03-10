@@ -22,5 +22,13 @@ public class GpsPositionController: ControllerBase
         var position = await _service.saveGpsPosition((GpsPositionItem)command);
         
         return Ok(position);
+    }  
+    
+    [HttpGet]
+    public async Task<IActionResult> GetPositions([FromQuery] int page = 0, [FromQuery] int size = 30)
+    {
+        var results = await _service.getAllGpsPosition(page, size);
+        
+        return Ok(results);
     }    
 }

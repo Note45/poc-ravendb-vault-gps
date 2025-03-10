@@ -19,4 +19,11 @@ public class GpsPositionService: IGpsPositionService
 
         return result;
     }
+
+    public Task<IEnumerable<GpsPositionItem>> getAllGpsPosition(int page = 0, int size = 30)
+    {
+        var results = this._repository.getAllGpsPositionItems(page, size);
+
+        return results;
+    }
 }
