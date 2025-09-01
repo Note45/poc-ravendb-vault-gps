@@ -1,0 +1,31 @@
+﻿version: '3.8'
+
+services:
+  ravendb:
+    container_name: ravendb-server
+    image: ravendb/ravendb:latest
+    ports:
+      - "8080:8080"   # Porta HTTP para o Studio
+      - "38888:38888" # Porta TCP para conexões de cliente
+    volumes:
+      - ./data:/var/lib/ravendb/data
+    environment:
+      - RAVEN_Setup_Mode=None
+      - RAVEN_License_Eula_Accepted=true
+      - RAVEN_Security_UnsecuredAccessAllowed=PublicNetwork
+      - RAVEN_ServerUrl=http://0.0.0.0:8080
+      - RAVEN_ServerPublicUrl=http://ravendb:8080
+
+  ravendb-init:
+    image: curlimages/curl:latest
+    depends_on:
+      - ravendb
+    entrypoint: >
+      sh -c "
+      echo 'Aguardando RavenDB iniciar...';
+      sleep 15;
+      curl -X PUT http://ravendb:8080/databases/vault-gps \
+           -H 'Content-Type: application/json' \
+           -d '{\"DatabaseName\":\"vault-gps\",\"ReplicationFactor\":1}';
+      echo 'Banco de dados vault-gps criado com sucesso!';
+      "
