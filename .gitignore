@@ -1,3 +1,4 @@
 .DS_Store
-vault-gps/obj
-vault-gps/bin
+Vault.Gps/obj
+Vault.Gps/bin
+Vault.Gps/data
