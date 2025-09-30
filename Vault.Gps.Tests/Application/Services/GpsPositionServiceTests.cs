@@ -1,0 +1,63 @@
+using NSubstitute;
+using vault_gps.Application.Services;
+using vault_gps.Contracts.Models;
+using vault_gps.Infra.Database.Contracts;
+using Xunit;
+using Assert = Xunit.Assert;
+
+namespace Vault.Gps.Tests.Application.Services;
+
+public class GpsPositionServiceTests
+{
+    [Fact(DisplayName = "Should be able to save the gps position item")]
+    public async Task Should_Be_Able_To_Save_Position()
+    {
+        //Act
+        var repoMock = Substitute.For<IGpsPositionRepository>();
+        var service = new GpsPositionService(repoMock);
+        var positionItem = new GpsPositionItem()
+        {
+            EventType = "EventType",
+            Latitude = "Latitude",
+            Longitude = "Longitude",
+            UpdateTime = DateTime.Now.ToShortDateString(),
+            Type = "Type"
+        };
+        
+        repoMock.saveGpsPositionItem(Arg.Any<GpsPositionItem>()).Returns(positionItem);
+        
+        //Arrange
+        var result = await service.saveGpsPosition(positionItem);
+        
+        //Assert
+        Assert.Equivalent(result, positionItem);
+    }
+    
+    [Fact(DisplayName = "Should be able to get all the gps position items")]
+    public async Task Should_Be_Able_To_Get_All_Gps_Position_Items()
+    {
+        //Act
+        var repoMock = Substitute.For<IGpsPositionRepository>();
+        var service = new GpsPositionService(repoMock);
+        var positionItem = new GpsPositionItem()
+        {
+            EventType = "EventType",
+            Latitude = "Latitude",
+            Longitude = "Longitude",
+            UpdateTime = DateTime.Now.ToShortDateString(),
+            Type = "Type"
+        };
+        var positionItemsList = new List<GpsPositionItem>()
+        {
+            positionItem
+        };
+        
+        repoMock.getAllGpsPositionItems(Arg.Any<int>(), Arg.Any<int>()).Returns(positionItemsList);
+        
+        //Arrange
+        var results = await service.getAllGpsPosition(1, 10);
+        
+        //Assert
+        Assert.Equivalent(results, positionItemsList);
+    }
+ }

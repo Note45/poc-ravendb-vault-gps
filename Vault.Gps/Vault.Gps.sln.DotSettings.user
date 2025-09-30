@@ -2,5 +2,6 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=9b0029a5_002D7f2a_002D4c09_002D9795_002D9e1c3883e26b/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="CreateGpsPositionCommandTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::06189115-309F-424E-B46E-A51CB9E90F06::net9.0::Vault.Gps.Tests.CreateGpsPositionCommandTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::06189115-309F-424E-B46E-A51CB9E90F06::net9.0::Vault.Gps.Tests.Application.Services.GpsPositionServiceTests&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
