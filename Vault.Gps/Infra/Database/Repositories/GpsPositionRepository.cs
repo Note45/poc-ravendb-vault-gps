@@ -29,7 +29,7 @@ public class GpsPositionRepository: IGpsPositionRepository
 
     public async Task<IEnumerable<GpsPositionItem>> getAllGpsPositionItems(int page = 0, int size = 30)
     {
-        var results = await _session.Query<GpsPositionItem>().Skip((page + 1) * size).Take(size).ToListAsync();
+        var results = await _session.Query<GpsPositionItem>().Skip(page * size).Take(size).ToListAsync();
 
         return results; 
     }
