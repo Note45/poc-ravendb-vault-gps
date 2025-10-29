@@ -21,7 +21,7 @@ public class GpsPositionControllerTests
         var command = new CreateGpsPositionCommand()
         {
             AggregateId = Guid.NewGuid().ToString(),
-            EventType = EventTypeEnum.GpsPositionItemCreated,
+            EventType = nameof(EventTypeEnum.GpsPositionItemCreated),
             Latitude = "Latitude",
             Longitude = "Longitude",
             UpdateTime = DateTime.Now.ToShortDateString(),
@@ -46,7 +46,7 @@ public class GpsPositionControllerTests
         var positionItem = new GpsPositionItem()
         {
             AggregateId = Guid.NewGuid().ToString(),
-            EventType = EventTypeEnum.GpsPositionItemCreated.ToString(),
+            EventType = nameof(EventTypeEnum.GpsPositionItemCreated),
             Latitude = "Latitue",
             Longitude = "Longitude",
             UpdateTime = DateTime.Now.ToShortDateString(),

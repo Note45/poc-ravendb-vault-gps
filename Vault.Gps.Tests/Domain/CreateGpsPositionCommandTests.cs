@@ -15,7 +15,7 @@ public class CreateGpsPositionCommandTests
         var command = new CreateGpsPositionCommand()
         {
             AggregateId = Guid.NewGuid().ToString(),
-            EventType = EventTypeEnum.GpsPositionItemCreated,
+            EventType = nameof(EventTypeEnum.GpsPositionItemCreated),
             Latitude = "1231231",
             Longitude = "5785775",
             UpdateTime = DateTime.UtcNow.ToString(),
@@ -27,7 +27,7 @@ public class CreateGpsPositionCommandTests
 
         //Assert
         Assert.Equal(command.AggregateId, gpsPositionItem.AggregateId);
-        Assert.Equal(command.EventType.ToString(), gpsPositionItem.EventType);
+        Assert.Equal(command.EventType, gpsPositionItem.EventType);
         Assert.Equal(command.Latitude, gpsPositionItem.Latitude);
         Assert.Equal(command.Longitude, gpsPositionItem.Longitude);
         Assert.Equal(command.UpdateTime, gpsPositionItem.UpdateTime);
