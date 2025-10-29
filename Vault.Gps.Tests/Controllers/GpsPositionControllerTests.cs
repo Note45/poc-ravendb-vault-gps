@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
+using vault_gps.Contracts.Enums;
 using vault_gps.Contracts.Models;
 using vault_gps.Contracts.Services;
 using vault_gps.Controllers;
@@ -20,7 +21,7 @@ public class GpsPositionControllerTests
         var command = new CreateGpsPositionCommand()
         {
             AggregateId = Guid.NewGuid().ToString(),
-            EventType = "EventType",
+            EventType = EventTypeEnum.GpsPositionItemCreated,
             Latitude = "Latitude",
             Longitude = "Longitude",
             UpdateTime = DateTime.Now.ToShortDateString(),
@@ -45,8 +46,8 @@ public class GpsPositionControllerTests
         var positionItem = new GpsPositionItem()
         {
             AggregateId = Guid.NewGuid().ToString(),
-            EventType = "EventType",
-            Latitude = "Latitude",
+            EventType = EventTypeEnum.GpsPositionItemCreated.ToString(),
+            Latitude = "Latitue",
             Longitude = "Longitude",
             UpdateTime = DateTime.Now.ToShortDateString(),
             Description = "Description"

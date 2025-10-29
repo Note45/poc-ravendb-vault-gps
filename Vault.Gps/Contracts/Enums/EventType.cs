@@ -1,7 +1,8 @@
 namespace vault_gps.Contracts.Enums;
 
-public enum EventType
+public enum EventTypeEnum
 {
     GpsPositionItemCreated,
     GpsPositionItemUpdated,
+    GpsPositionItemUpdatedFinished,
 }
