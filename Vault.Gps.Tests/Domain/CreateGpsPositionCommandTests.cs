@@ -14,11 +14,12 @@ public class CreateGpsPositionCommandTests
         // Act
         var command = new CreateGpsPositionCommand()
         {
+            AggregateId = Guid.NewGuid().ToString(),
             EventType = EventType.GpsPositionItemCreated.ToString(),
             Latitude = "1231231",
             Longitude = "5785775",
             UpdateTime = DateTime.UtcNow.ToString(),
-            Type = "Home",
+            Description = "Home",
         }; 
         
         // Arrange
@@ -26,9 +27,10 @@ public class CreateGpsPositionCommandTests
 
         //Assert
         Assert.Equal(command.EventType, gpsPositionItem.EventType);
+        Assert.Equal(command.EventType, gpsPositionItem.EventType);
         Assert.Equal(command.Latitude, gpsPositionItem.Latitude);
         Assert.Equal(command.Longitude, gpsPositionItem.Longitude);
         Assert.Equal(command.UpdateTime, gpsPositionItem.UpdateTime);
-        Assert.Equal(command.Type, gpsPositionItem.Type);
+        Assert.Equal(command.Description, gpsPositionItem.Description);
     }
 }

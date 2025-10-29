@@ -19,11 +19,12 @@ public class GpsPositionControllerTests
         var sut = new GpsPositionController(mockService);
         var command = new CreateGpsPositionCommand()
         {
+            AggregateId = Guid.NewGuid().ToString(),
             EventType = "EventType",
             Latitude = "Latitude",
             Longitude = "Longitude",
             UpdateTime = DateTime.Now.ToShortDateString(),
-            Type = "Type"
+            Description = "Description"
         };
         
         mockService.saveGpsPosition(Arg.Any<GpsPositionItem>()).Returns((GpsPositionItem)command); 
@@ -43,11 +44,12 @@ public class GpsPositionControllerTests
         var sut = new GpsPositionController(mockService);
         var positionItem = new GpsPositionItem()
         {
+            AggregateId = Guid.NewGuid().ToString(),
             EventType = "EventType",
             Latitude = "Latitude",
             Longitude = "Longitude",
             UpdateTime = DateTime.Now.ToShortDateString(),
-            Type = "Type"
+            Description = "Description"
         };
         var positionItemsList = new List<GpsPositionItem>()
         {

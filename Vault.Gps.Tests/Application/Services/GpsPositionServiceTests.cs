@@ -17,11 +17,12 @@ public class GpsPositionServiceTests
         var service = new GpsPositionService(repoMock);
         var positionItem = new GpsPositionItem()
         {
+            AggregateId = Guid.NewGuid().ToString(),
             EventType = "EventType",
             Latitude = "Latitude",
             Longitude = "Longitude",
             UpdateTime = DateTime.Now.ToShortDateString(),
-            Type = "Type"
+            Description = "Description"
         };
         
         repoMock.saveGpsPositionItem(Arg.Any<GpsPositionItem>()).Returns(positionItem);
@@ -41,11 +42,12 @@ public class GpsPositionServiceTests
         var service = new GpsPositionService(repoMock);
         var positionItem = new GpsPositionItem()
         {
+            AggregateId = Guid.NewGuid().ToString(),
             EventType = "EventType",
             Latitude = "Latitude",
             Longitude = "Longitude",
             UpdateTime = DateTime.Now.ToShortDateString(),
-            Type = "Type"
+            Description = "Description"
         };
         var positionItemsList = new List<GpsPositionItem>()
         {

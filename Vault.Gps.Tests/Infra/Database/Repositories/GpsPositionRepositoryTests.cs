@@ -35,11 +35,12 @@ public class GpsPositionRepositoryTests: RavenTestDriver
         var repo = new GpsPositionRepository(dockStoreMock);
         var positionItem = new GpsPositionItem()
         {
+            AggregateId = Guid.NewGuid().ToString(),
             EventType = "EventType",
             Latitude = "Latitude",
             Longitude = "Longitude",
             UpdateTime = DateTime.Now.ToShortDateString(),
-            Type = "Type"
+            Description = "Description"
         };
         
         //Arrange
@@ -57,19 +58,21 @@ public class GpsPositionRepositoryTests: RavenTestDriver
             // Arrange
             using (var session = store.OpenAsyncSession())
             {
-                await session.StoreAsync(new GpsPositionItem {             
+                await session.StoreAsync(new GpsPositionItem {  
+                    AggregateId = Guid.NewGuid().ToString(),
                     EventType = "EventType 1",
                     Latitude = "Latitude 1",
                     Longitude = "Longitude 1",
                     UpdateTime = DateTime.Now.ToShortDateString(),
-                    Type = "Type 1" 
+                    Description = "Description" 
                 });
-                await session.StoreAsync(new GpsPositionItem {             
+                await session.StoreAsync(new GpsPositionItem {    
+                    AggregateId = Guid.NewGuid().ToString(),
                     EventType = "EventType 2",
                     Latitude = "Latitude 2",
                     Longitude = "Longitude 2",
                     UpdateTime = DateTime.Now.ToShortDateString(),
-                    Type = "Type 2" 
+                    Description = "Description" 
                 });
                 await session.SaveChangesAsync();
             }
