@@ -1,6 +1,7 @@
 using vault_gps.Extensions;
 using vault_gps.Extensions.ApplicatonService;
 using vault_gps.Extensions.Database;
+using vault_gps.Extensions.Validations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ builder.Services
     .AddDatabase()
     .AddRepositories()
     .AddServices()
+    .AddValidations()
     .AddControllers();
 
 var app = builder.Build();
