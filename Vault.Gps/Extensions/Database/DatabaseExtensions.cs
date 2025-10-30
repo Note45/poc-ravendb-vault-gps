@@ -2,7 +2,7 @@ using vault_gps.Infra.Database;
 using vault_gps.Infra.Database.Contracts;
 using vault_gps.Infra.Database.Options;
 
-namespace vault_gps.Extensions;
+namespace vault_gps.Extensions.Database;
 
 public static class DatabaseExtensions
 {

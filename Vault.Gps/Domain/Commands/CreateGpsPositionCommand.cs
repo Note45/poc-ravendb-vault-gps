@@ -2,7 +2,7 @@ using System.ComponentModel;
 using vault_gps.Contracts.Enums;
 using vault_gps.Contracts.Models;
 
-namespace vault_gps.Domain;
+namespace vault_gps.Domain.Commands;
 
 public class CreateGpsPositionCommand
 {

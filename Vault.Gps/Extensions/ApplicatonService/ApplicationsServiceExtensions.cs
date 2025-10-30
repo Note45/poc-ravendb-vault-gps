@@ -3,7 +3,7 @@ using vault_gps.Contracts.Services;
 using vault_gps.Infra.Database.Contracts;
 using vault_gps.Infra.Database.Repositories;
 
-namespace vault_gps.Extensions;
+namespace vault_gps.Extensions.ApplicatonService;
 
 public static class ApplicationsServiceExtensions
 {

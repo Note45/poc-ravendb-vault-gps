@@ -1,4 +1,7 @@
 using vault_gps.Extensions;
+using vault_gps.Extensions.ApplicatonService;
+using vault_gps.Extensions.Database;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
