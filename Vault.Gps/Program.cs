@@ -1,12 +1,14 @@
-using vault_gps.Extensions;
+using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using vault_gps.Extensions.ApplicatonService;
 using vault_gps.Extensions.Database;
 using vault_gps.Extensions.Validations;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services
+    .AddEndpointsApiExplorer()
+    .AddSwaggerGen()
+    .AddFluentValidationRulesToSwagger();
 
 var configure = builder.Configuration;
 
