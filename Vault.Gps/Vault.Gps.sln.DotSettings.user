@@ -5,5 +5,6 @@
     &lt;TestId&gt;xUnit::06189115-309F-424E-B46E-A51CB9E90F06::net9.0::Vault.Gps.Tests.Controllers.GpsPositionControllerTests&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::06189115-309F-424E-B46E-A51CB9E90F06::net9.0::Vault.Gps.Tests.Infra.Database.Repositories.GpsPositionRepositoryTests&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::06189115-309F-424E-B46E-A51CB9E90F06::net9.0::Vault.Gps.Tests.Application.Services.GpsPositionServiceTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::06189115-309F-424E-B46E-A51CB9E90F06::net9.0::Vault.Gps.Tests.Domain.Validators.CreateGpsPositionCommandValidatorTests&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
