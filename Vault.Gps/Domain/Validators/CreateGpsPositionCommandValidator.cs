@@ -10,8 +10,8 @@ public class CreateGpsPositionCommandValidator: AbstractValidator<CreateGpsPosit
     {
         RuleFor(command => command.AggregateId).NotEmpty().NotNull();
         RuleFor(command => command.EventType).NotEmpty().NotNull().IsEnumName(typeof(EventTypeEnum));
-        RuleFor(command => command.Latitude).NotEmpty().NotNull();
-        RuleFor(command => command.Longitude).NotEmpty().NotNull();
+        RuleFor(command => command.Latitude).NotEmpty().NotNull().Matches(@"^\d+$").WithMessage("'{PropertyName}' must only contain numbers");
+        RuleFor(command => command.Longitude).NotEmpty().NotNull().Matches(@"^\d+$").WithMessage("'{PropertyName}' must only contain numbers");
         RuleFor(command => command.UpdateTime).NotEmpty().NotNull();
         RuleFor(command => command.Description).NotEmpty().NotNull();
     }
