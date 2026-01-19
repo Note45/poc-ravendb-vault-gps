@@ -5,14 +5,9 @@ using vault_gps.Infra.Database.Options;
 
 namespace vault_gps.Infra.Database;
 
-public class DocumentStoreHolder: IDocumentStoreHolder
+public class DocumentStoreHolder(IOptions<DatabaseOptions>? options = null) : IDocumentStoreHolder
 {
-    private DatabaseOptions _options;
-    
-    public DocumentStoreHolder(IOptions<DatabaseOptions>? options = null)
-    {
-        _options = options is not null ? options.Value : new DatabaseOptions();
-    }
+    private readonly DatabaseOptions _options = options is not null ? options.Value : new DatabaseOptions();
 
     public IDocumentStore CreateStore()
     {
