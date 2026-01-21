@@ -1,6 +1,6 @@
 using FluentValidation;
+using vault_gps.Application.Commands;
 using vault_gps.Contracts.Enums;
-using vault_gps.Domain.Commands;
 
 namespace vault_gps.Domain.Validators;
 

@@ -1,10 +1,10 @@
-﻿using vault_gps.Contracts.Enums;
+﻿using vault_gps.Application.Commands;
+using vault_gps.Contracts.Enums;
 using vault_gps.Contracts.Models;
-using vault_gps.Domain.Commands;
 using Xunit;
 using Assert = Xunit.Assert;
 
-namespace Vault.Gps.Tests.Domain.Commands;
+namespace Vault.Gps.Tests.Application.Commands;
 
 public class CreateGpsPositionCommandTests
 {

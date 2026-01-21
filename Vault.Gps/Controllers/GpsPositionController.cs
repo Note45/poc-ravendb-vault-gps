@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using vault_gps.Application.Commands;
 using vault_gps.Contracts.Models;
 using vault_gps.Contracts.Services;
-using vault_gps.Domain.Commands;
 
 namespace vault_gps.Controllers;
 

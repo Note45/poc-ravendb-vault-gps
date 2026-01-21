@@ -1,6 +1,5 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using vault_gps.Domain.Commands;
 using vault_gps.Domain.Validators;
 
 namespace vault_gps.Extensions.Validations;
