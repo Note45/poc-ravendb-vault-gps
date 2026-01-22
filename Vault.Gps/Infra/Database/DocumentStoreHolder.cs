@@ -5,25 +5,25 @@ using vault_gps.Infra.Database.Options;
 
 namespace vault_gps.Infra.Database;
 
-public class DocumentStoreHolder(IOptions<DatabaseOptions>? options = null) : IDocumentStoreHolder
+public class DocumentStoreHolder : IDocumentStoreHolder
 {
-    private readonly DatabaseOptions _options = options is not null ? options.Value : new DatabaseOptions();
+    private readonly IDocumentStore _store;
 
-    public IDocumentStore CreateStore()
+    public DocumentStoreHolder(IOptions<DatabaseOptions> options)
     {
-        IDocumentStore store = new DocumentStore()
-        {
-            Urls = [_options.Url],
+        var opts = options.Value;
 
+        _store = new DocumentStore
+        {
+            Urls = new[] { opts.Url },
+            Database = opts.Base,
             Conventions =
             {
                 MaxNumberOfRequestsPerSession = 10,
                 UseOptimisticConcurrency = true
-            },
-
-            Database = _options.Base,
+            }
         }.Initialize();
-
-        return store;
     }
+
+    public IDocumentStore GetStore() => _store;
 }

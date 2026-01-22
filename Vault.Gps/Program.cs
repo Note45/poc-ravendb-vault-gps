@@ -16,6 +16,7 @@ builder.Services
     .AddEndpointsApiExplorer()
     .AddDatabaseConfigs(configure)
     .AddDatabase()
+    .AddDatabaseIndex()
     .AddRepositories()
     .AddServices()
     .AddValidations()

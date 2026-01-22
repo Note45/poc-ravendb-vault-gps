@@ -9,13 +9,13 @@ public class GpsPositionByAggregateId: AbstractIndexCreationTask<GpsPositionItem
     public GpsPositionByAggregateId()
     {
         Map = items => from item in items
-            select new
+            select new GpsPositionAggregateResult
             {
-                item.AggregateId,
-                item.EventType,
-                item.Latitude,
-                item.Longitude,
-                item.UpdateTime,
+                AggregateId = item.AggregateId,
+                EventType = item.EventType,
+                Latitude = item.Latitude,
+                Longitude = item.Longitude,
+                UpdateTime = DateTime.Parse(item.UpdateTime),
                 TotalEvents = 1
             };
 

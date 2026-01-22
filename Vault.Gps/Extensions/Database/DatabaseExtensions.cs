@@ -10,32 +10,32 @@ namespace vault_gps.Extensions.Database;
 
 public static class DatabaseExtensions
 {
-    public static IServiceCollection AddDatabaseConfigs(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddDatabaseConfigs(
+        this IServiceCollection services,
+        IConfiguration configuration)
     {
-        services.Configure<DatabaseOptions>(configuration.GetSection("Database"));
+        services.Configure<DatabaseOptions>(
+            configuration.GetSection("Database"));
 
         return services;
     }
-    
+
     public static IServiceCollection AddDatabase(this IServiceCollection services)
     {
         services.AddSingleton<IDocumentStoreHolder, DocumentStoreHolder>();
 
         services.AddSingleton<IDocumentStore>(sp =>
-        {
-            var holder = sp.GetRequiredService<IDocumentStoreHolder>();
-            var store = holder.CreateStore();
-            
-            IndexCreation.CreateIndexes(
-                typeof(GpsPositionByAggregateId).Assembly,
-                store
-            );
+            sp.GetRequiredService<IDocumentStoreHolder>().GetStore());
 
-            return store;
-        });
-        
         services.AddScoped(sp =>
             sp.GetRequiredService<IDocumentStore>().OpenAsyncSession());
+
+        return services;
+    }
+
+    public static IServiceCollection AddDatabaseIndex(this IServiceCollection services)
+    {
+        services.AddSingleton<IHostedService, RavenIndexHostedService>();
         
         return services;
     }
