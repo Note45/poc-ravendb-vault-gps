@@ -28,7 +28,7 @@ public class GpsPositionControllerTests
             Description = "Description"
         };
         
-        mockService.saveGpsPosition(Arg.Any<GpsPositionItem>()).Returns((GpsPositionItem)command); 
+        mockService.SaveGpsPosition(Arg.Any<GpsPositionItem>()).Returns((GpsPositionItem)command); 
         
         //Arrange
         var result = await sut.PostPosition(command) as OkObjectResult;
@@ -57,7 +57,7 @@ public class GpsPositionControllerTests
             positionItem
         };
         
-        mockService.getAllGpsPosition(Arg.Any<int>(), Arg.Any<int>()).Returns(positionItemsList);
+        mockService.GetAllGpsPosition(Arg.Any<int>(), Arg.Any<int>()).Returns(positionItemsList);
         
         //Arrange
         var results = await sut.GetPositions(1, 10) as ObjectResult;

@@ -44,7 +44,7 @@ public class GpsPositionRepositoryTests: RavenTestDriver
         };
         
         //Arrange
-        var result = await repo.saveGpsPositionItem(positionItem);
+        var result = await repo.SaveGpsPositionItem(positionItem);
         
         //Assert
         Xunit.Assert.Equivalent(result, positionItem);
@@ -85,7 +85,7 @@ public class GpsPositionRepositoryTests: RavenTestDriver
             var repository = new GpsPositionRepository(documentHolderMock);
 
             // Act
-            var result = await repository.getAllGpsPositionItems(0, 10);
+            var result = await repository.GetAllGpsPositionItems(0, 10);
 
             // Assert
             Xunit.Assert.Equivalent(2,  result.Count());

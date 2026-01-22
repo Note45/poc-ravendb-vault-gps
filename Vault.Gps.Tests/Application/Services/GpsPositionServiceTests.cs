@@ -25,10 +25,10 @@ public class GpsPositionServiceTests
             Description = "Description"
         };
         
-        repoMock.saveGpsPositionItem(Arg.Any<GpsPositionItem>()).Returns(positionItem);
+        repoMock.SaveGpsPositionItem(Arg.Any<GpsPositionItem>()).Returns(positionItem);
         
         //Arrange
-        var result = await service.saveGpsPosition(positionItem);
+        var result = await service.SaveGpsPosition(positionItem);
         
         //Assert
         Assert.Equivalent(result, positionItem);
@@ -54,10 +54,10 @@ public class GpsPositionServiceTests
             positionItem
         };
         
-        repoMock.getAllGpsPositionItems(Arg.Any<int>(), Arg.Any<int>()).Returns(positionItemsList);
+        repoMock.GetAllGpsPositionItems(Arg.Any<int>(), Arg.Any<int>()).Returns(positionItemsList);
         
         //Arrange
-        var results = await service.getAllGpsPosition(1, 10);
+        var results = await service.GetAllGpsPosition(1, 10);
         
         //Assert
         Assert.Equivalent(results, positionItemsList);
