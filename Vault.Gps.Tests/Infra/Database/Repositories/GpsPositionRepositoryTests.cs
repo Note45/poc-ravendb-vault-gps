@@ -80,7 +80,7 @@ public class GpsPositionRepositoryTests: RavenTestDriver
             WaitForIndexing(store); 
 
             var documentHolderMock = Substitute.For<IDocumentStoreHolder>();
-            documentHolderMock.CreateStore().Returns(store);
+            documentHolderMock.GetStore().Returns(store);
 
             var repository = new GpsPositionRepository(documentHolderMock);
 
