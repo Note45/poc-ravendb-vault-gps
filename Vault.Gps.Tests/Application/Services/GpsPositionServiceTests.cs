@@ -1,4 +1,5 @@
 using NSubstitute;
+using vault_gps.Application.Queries;
 using vault_gps.Application.Services;
 using vault_gps.Contracts.Models;
 using vault_gps.Infra.Database.Contracts;
@@ -61,5 +62,60 @@ public class GpsPositionServiceTests
         
         //Assert
         Assert.Equivalent(results, positionItemsList);
+    }
+    
+    [Fact(DisplayName = "Should be able to get all agregates gps position")]
+    public async Task Should_Be_Able_To_Get_All_Agregates_Gps_Position_Items()
+    {
+        //Act
+        var repoMock = Substitute.For<IGpsPositionRepository>();
+        var service = new GpsPositionService(repoMock);
+        var positionItem = new GpsPositionAggregateResult()
+        {
+            AggregateId = Guid.NewGuid().ToString(),
+            EventType = "EventType",
+            Latitude = "Latitude",
+            Longitude = "Longitude",
+            UpdateTime = DateTime.Now,
+            TotalEvents = 1
+        };
+        var positionItemsList = new List<GpsPositionAggregateResult>()
+        {
+            positionItem
+        };
+        
+        repoMock.GetAllGpsPositionAggregateResults(Arg.Any<GetGpsAggregatesQuery>()).Returns(positionItemsList);
+        
+        //Arrange
+        var results = await service.GetAllGpsPositionAggregateResults(new GetGpsAggregatesQuery(1, 10));
+        
+        //Assert
+        Assert.Equivalent(results, positionItemsList);
+    }
+    
+    [Fact(DisplayName = "Should be able to get agregate gps position by id")]
+    public async Task Should_Be_Able_To_Get_Agregate_Gps_Position_By_Id()
+    {
+        //Act
+        var repoMock = Substitute.For<IGpsPositionRepository>();
+        var service = new GpsPositionService(repoMock);
+        var agregateId = Guid.NewGuid().ToString();
+        var positionItem = new GpsPositionAggregateResult()
+        {
+            AggregateId = agregateId,
+            EventType = "EventType",
+            Latitude = "Latitude",
+            Longitude = "Longitude",
+            UpdateTime = DateTime.Now,
+            TotalEvents = 1
+        };
+        
+        repoMock.GetAggregateById(Arg.Any<GetGpsAggregateByIdQuery>()).Returns(positionItem);
+        
+        //Arrange
+        var results = await service.GetAggregateById(new GetGpsAggregateByIdQuery(agregateId));
+        
+        //Assert
+        Assert.Equivalent(results, positionItem);
     }
  }
