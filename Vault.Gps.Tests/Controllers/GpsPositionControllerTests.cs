@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using vault_gps.Application.Commands;
+using vault_gps.Application.Queries;
 using vault_gps.Contracts.Enums;
 using vault_gps.Contracts.Models;
 using vault_gps.Contracts.Services;
@@ -64,5 +65,57 @@ public class GpsPositionControllerTests
         
         //Assert
         Assert.Equivalent(positionItemsList, results?.Value);
+    }
+    
+    [Fact(DisplayName = "Should be able to get all the gps position agregates")]
+    public async Task Should_Be_Able_To_Get_Positions_Agregates()
+    {
+        //Act
+        var mockService = Substitute.For<IGpsPositionService>();
+        var sut = new GpsPositionController(mockService);
+        var positionItem = new GpsPositionAggregateResult()
+        {
+            AggregateId = Guid.NewGuid().ToString(),
+            EventType = nameof(EventTypeEnum.GpsPositionItemCreated),
+            Latitude = "Latitue",
+            Longitude = "Longitude",
+            UpdateTime = DateTime.Now,
+        };
+        var positionItemsList = new List<GpsPositionAggregateResult>()
+        {
+            positionItem
+        };
+        
+        mockService.GetAllGpsPositionAggregateResults(Arg.Any<GetGpsAggregatesQuery>()).Returns(positionItemsList);
+        
+        //Arrange
+        var results = await sut.GetAggregates(1, 10) as ObjectResult;
+        
+        //Assert
+        Assert.Equivalent(positionItemsList, results?.Value);
+    }
+    
+    [Fact(DisplayName = "Should be able to get gps position agregate by id")]
+    public async Task Should_Be_Able_To_Get_Positions_Agregate_By_Id()
+    {
+        //Act
+        var mockService = Substitute.For<IGpsPositionService>();
+        var sut = new GpsPositionController(mockService);
+        var positionItem = new GpsPositionAggregateResult()
+        {
+            AggregateId = Guid.NewGuid().ToString(),
+            EventType = nameof(EventTypeEnum.GpsPositionItemCreated),
+            Latitude = "Latitue",
+            Longitude = "Longitude",
+            UpdateTime = DateTime.Now,
+        };
+        
+        mockService.GetAggregateById(Arg.Any<GetGpsAggregateByIdQuery>()).Returns(positionItem);
+        
+        //Arrange
+        var results = await sut.GetAggregateById(positionItem.AggregateId) as ObjectResult;
+        
+        //Assert
+        Assert.Equivalent(positionItem, results?.Value);
     }
 }
