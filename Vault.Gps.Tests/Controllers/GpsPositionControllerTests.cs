@@ -1,10 +1,10 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using vault_gps.Application.Commands;
+using vault_gps.Application.DTOs;
 using vault_gps.Application.Queries;
 using vault_gps.Contracts.Enums;
-using vault_gps.Contracts.Models;
-using vault_gps.Contracts.Services;
 using vault_gps.Controllers;
 using Xunit;
 using Assert = Xunit.Assert;
@@ -16,106 +16,166 @@ public class GpsPositionControllerTests
     [Fact(DisplayName = "Should be able to save the gps position item")]
     public async Task Should_Be_Able_Post_Position()
     {
-        //Act
-        var mockService = Substitute.For<IGpsPositionService>();
-        var sut = new GpsPositionController(mockService);
+        //Arrange
+        var mockMediator = Substitute.For<IMediator>();
+        var sut = new GpsPositionController(mockMediator);
         var command = new CreateGpsPositionCommand()
         {
             AggregateId = Guid.NewGuid().ToString(),
             EventType = nameof(EventTypeEnum.GpsPositionItemCreated),
-            Latitude = "Latitude",
-            Longitude = "Longitude",
-            UpdateTime = DateTime.Now.ToShortDateString(),
+            Latitude = "40",
+            Longitude = "-74",
+            UpdateTime = DateTime.Now.ToString("O"),
             Description = "Description"
         };
         
-        mockService.SaveGpsPosition(Arg.Any<GpsPositionItem>()).Returns((GpsPositionItem)command); 
+        var expectedResponse = new GpsPositionResponse()
+        {
+            Id = "doc-123",
+            AggregateId = command.AggregateId,
+            EventType = command.EventType,
+            Latitude = command.Latitude,
+            Longitude = command.Longitude,
+            UpdateTime = command.UpdateTime,
+            Description = command.Description
+        };
         
-        //Arrange
-        var result = await sut.PostPosition(command) as OkObjectResult;
+        mockMediator.Send(Arg.Is<CreateGpsPositionCommand>(
+            c => c.AggregateId == command.AggregateId), 
+            Arg.Any<CancellationToken>())
+            .Returns(expectedResponse);
+        
+        //Act
+        var result = await sut.PostPosition(command) as CreatedAtActionResult;
 
         //Assert
-        Assert.Equivalent(command, result?.Value);
+        Assert.NotNull(result);
+        Assert.Equal(nameof(sut.GetAggregateById), result.ActionName);
+        Assert.Equivalent(expectedResponse, result.Value);
+        await mockMediator.Received(1).Send(Arg.Any<CreateGpsPositionCommand>(), Arg.Any<CancellationToken>());
     }
     
     [Fact(DisplayName = "Should be able to get all the gps position")]
     public async Task Should_Be_Able_To_Get_Positions_()
     {
-        //Act
-        var mockService = Substitute.For<IGpsPositionService>();
-        var sut = new GpsPositionController(mockService);
-        var positionItem = new GpsPositionItem()
+        //Arrange
+        var mockMediator = Substitute.For<IMediator>();
+        var sut = new GpsPositionController(mockMediator);
+        
+        var positionItem = new GpsPositionResponse()
         {
+            Id = "doc-1",
             AggregateId = Guid.NewGuid().ToString(),
             EventType = nameof(EventTypeEnum.GpsPositionItemCreated),
-            Latitude = "Latitue",
-            Longitude = "Longitude",
-            UpdateTime = DateTime.Now.ToShortDateString(),
+            Latitude = "40",
+            Longitude = "-74",
+            UpdateTime = DateTime.Now.ToString("O"),
             Description = "Description"
         };
-        var positionItemsList = new List<GpsPositionItem>()
+        
+        var expectedResponse = new PaginatedResponse<GpsPositionResponse>()
         {
-            positionItem
+            Page = 1,
+            Size = 10,
+            TotalCount = 1,
+            Items = new List<GpsPositionResponse>() { positionItem }
         };
         
-        mockService.GetAllGpsPosition(Arg.Any<int>(), Arg.Any<int>()).Returns(positionItemsList);
+        mockMediator.Send(Arg.Any<GetAllGpsPositionsQuery>(), Arg.Any<CancellationToken>())
+            .Returns(expectedResponse);
         
-        //Arrange
-        var results = await sut.GetPositions(1, 10) as ObjectResult;
+        //Act
+        var result = await sut.GetPositions(1, 10) as OkObjectResult;
         
         //Assert
-        Assert.Equivalent(positionItemsList, results?.Value);
+        Assert.NotNull(result);
+        Assert.Equivalent(expectedResponse, result.Value);
+        await mockMediator.Received(1).Send(Arg.Any<GetAllGpsPositionsQuery>(), Arg.Any<CancellationToken>());
     }
     
     [Fact(DisplayName = "Should be able to get all the gps position agregates")]
     public async Task Should_Be_Able_To_Get_Positions_Agregates()
     {
-        //Act
-        var mockService = Substitute.For<IGpsPositionService>();
-        var sut = new GpsPositionController(mockService);
-        var positionItem = new GpsPositionAggregateResult()
+        //Arrange
+        var mockMediator = Substitute.For<IMediator>();
+        var sut = new GpsPositionController(mockMediator);
+        
+        var aggregateItem = new GpsAggregateResponse()
         {
             AggregateId = Guid.NewGuid().ToString(),
-            EventType = nameof(EventTypeEnum.GpsPositionItemCreated),
-            Latitude = "Latitue",
-            Longitude = "Longitude",
-            UpdateTime = DateTime.Now,
+            Latitude = "40",
+            Longitude = "-74",
+            UpdateTime = DateTime.Now.ToString("O"),
+            Description = "GpsPositionItemCreated",
+            EventCount = 1
         };
-        var positionItemsList = new List<GpsPositionAggregateResult>()
+        
+        var expectedResponse = new PaginatedResponse<GpsAggregateResponse>()
         {
-            positionItem
+            Page = 1,
+            Size = 10,
+            TotalCount = 1,
+            Items = new List<GpsAggregateResponse>() { aggregateItem }
         };
         
-        mockService.GetAllGpsPositionAggregateResults(Arg.Any<GetGpsAggregatesQuery>()).Returns(positionItemsList);
+        mockMediator.Send(Arg.Any<GetGpsAggregatesQuery>(), Arg.Any<CancellationToken>())
+            .Returns(expectedResponse);
         
-        //Arrange
-        var results = await sut.GetAggregates(1, 10) as ObjectResult;
+        //Act
+        var result = await sut.GetAggregates(1, 10) as OkObjectResult;
         
         //Assert
-        Assert.Equivalent(positionItemsList, results?.Value);
+        Assert.NotNull(result);
+        Assert.Equivalent(expectedResponse, result.Value);
+        await mockMediator.Received(1).Send(Arg.Any<GetGpsAggregatesQuery>(), Arg.Any<CancellationToken>());
     }
     
     [Fact(DisplayName = "Should be able to get gps position agregate by id")]
     public async Task Should_Be_Able_To_Get_Positions_Agregate_By_Id()
     {
-        //Act
-        var mockService = Substitute.For<IGpsPositionService>();
-        var sut = new GpsPositionController(mockService);
-        var positionItem = new GpsPositionAggregateResult()
+        //Arrange
+        var mockMediator = Substitute.For<IMediator>();
+        var sut = new GpsPositionController(mockMediator);
+        var aggregateId = Guid.NewGuid().ToString();
+        
+        var expectedResponse = new GpsAggregateResponse()
         {
-            AggregateId = Guid.NewGuid().ToString(),
-            EventType = nameof(EventTypeEnum.GpsPositionItemCreated),
-            Latitude = "Latitue",
-            Longitude = "Longitude",
-            UpdateTime = DateTime.Now,
+            AggregateId = aggregateId,
+            Latitude = "40",
+            Longitude = "-74",
+            UpdateTime = DateTime.Now.ToString("O"),
+            Description = "GpsPositionItemCreated",
+            EventCount = 1
         };
         
-        mockService.GetAggregateById(Arg.Any<GetGpsAggregateByIdQuery>()).Returns(positionItem);
+        mockMediator.Send(Arg.Is<GetGpsAggregateByIdQuery>(
+            q => q.AggregateId == aggregateId), 
+            Arg.Any<CancellationToken>())
+            .Returns(expectedResponse);
         
-        //Arrange
-        var results = await sut.GetAggregateById(positionItem.AggregateId) as ObjectResult;
+        //Act
+        var result = await sut.GetAggregateById(aggregateId) as OkObjectResult;
         
         //Assert
-        Assert.Equivalent(positionItem, results?.Value);
+        Assert.NotNull(result);
+        Assert.Equivalent(expectedResponse, result.Value);
+        await mockMediator.Received(1).Send(Arg.Any<GetGpsAggregateByIdQuery>(), Arg.Any<CancellationToken>());
+    }
+    
+    [Fact(DisplayName = "Should return 404 when aggregate not found")]
+    public async Task Should_Return_NotFound_When_Aggregate_Not_Found()
+    {
+        //Arrange
+        var mockMediator = Substitute.For<IMediator>();
+        var sut = new GpsPositionController(mockMediator);
+        
+        mockMediator.Send(Arg.Any<GetGpsAggregateByIdQuery>(), Arg.Any<CancellationToken>())
+            .Returns((GpsAggregateResponse?)null);
+        
+        //Act
+        var result = await sut.GetAggregateById("non-existent");
+        
+        //Assert
+        Assert.IsType<NotFoundResult>(result);
     }
 }

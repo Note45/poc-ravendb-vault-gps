@@ -23,7 +23,7 @@ public class CreateGpsPositionCommandTests
         }; 
         
         // Arrange
-        var gpsPositionItem = (GpsPositionItem)command;
+        var gpsPositionItem = command;
 
         //Assert
         Assert.Equal(command.AggregateId, gpsPositionItem.AggregateId);
