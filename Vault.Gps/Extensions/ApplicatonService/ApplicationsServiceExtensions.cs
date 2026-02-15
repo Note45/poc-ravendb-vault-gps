@@ -1,5 +1,3 @@
-using vault_gps.Application.Services;
-using vault_gps.Contracts.Services;
 using vault_gps.Infra.Database.Contracts;
 using vault_gps.Infra.Database.Repositories;
 
@@ -11,12 +9,6 @@ public static class ApplicationsServiceExtensions
     {
         services.AddSingleton<IGpsPositionRepository, GpsPositionRepository>();
 
-        return services;
-    }
-
-    public static IServiceCollection AddServices(this IServiceCollection services)
-    {
-        services.AddSingleton<IGpsPositionService, GpsPositionService>();
 
         return services;
     }

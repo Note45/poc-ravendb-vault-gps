@@ -1,21 +1,20 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using vault_gps.Application.Commands;
 using vault_gps.Application.Queries;
-using vault_gps.Contracts.Models;
-using vault_gps.Contracts.Services;
 
 namespace vault_gps.Controllers;
 
 [ApiController]
 [Route("api/gps")]
-public class GpsPositionController(IGpsPositionService service) : ControllerBase
+public class GpsPositionController(IMediator mediator) : ControllerBase
 {
     [HttpPost]
     public async Task<IActionResult> PostPosition([FromBody] CreateGpsPositionCommand command)
     {
-        var position = await service.SaveGpsPosition((GpsPositionItem)command);
+        var result = await mediator.Send(command);
         
-        return Ok(position);
+        return CreatedAtAction(nameof(GetAggregateById), new { aggregateId = result.AggregateId }, result);
     }  
     
     [HttpGet]
@@ -23,7 +22,8 @@ public class GpsPositionController(IGpsPositionService service) : ControllerBase
         [FromQuery] int page = 0, 
         [FromQuery] int size = 30)
     {
-        var results = await service.GetAllGpsPosition(page, size);
+        var query = new GetAllGpsPositionsQuery(page, size);
+        var results = await mediator.Send(query);
         
         return Ok(results);
     }
@@ -31,7 +31,8 @@ public class GpsPositionController(IGpsPositionService service) : ControllerBase
     [HttpGet("aggregates/{aggregateId}")]
     public async Task<IActionResult> GetAggregateById(string aggregateId)
     {
-        var result = await service.GetAggregateById(new GetGpsAggregateByIdQuery(aggregateId));
+        var query = new GetGpsAggregateByIdQuery(aggregateId);
+        var result = await mediator.Send(query);
 
         return result is null ? NotFound() : Ok(result);
     }
@@ -41,9 +42,8 @@ public class GpsPositionController(IGpsPositionService service) : ControllerBase
         [FromQuery] int page = 0,
         [FromQuery] int size = 30)
     {
-        var results = await service.GetAllGpsPositionAggregateResults(
-                new GetGpsAggregatesQuery(page, size)
-            );
+        var query = new GetGpsAggregatesQuery(page, size);
+        var results = await mediator.Send(query);
         
         return Ok(results);
     }
