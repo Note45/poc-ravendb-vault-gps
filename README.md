@@ -30,7 +30,51 @@ The PoC follows the principles of **CQRS + Event Sourcing**:
 - [.NET](https://dotnet.microsoft.com/)  
 - [RavenDB](https://ravendb.net/) (Event Store and Projections)  
 - **gRPC** (service communication)  
-- **CQRS + Event Sourcing**  
+- **CQRS(MediatR) + Event Sourcing**  
+- **Swagger** (API documentation)
+- **Validation** (FluentValidation)
+- **Error Handling**: Pattern Result<T>
+- **Automatic Validation**: ValidationBehavior 
+- **DTOs**: Data Transfer Objects 
+- **Repository Pattern**: Data access abstraction (RavenDB)
+
+## 📁 Project Structure
+```
+Vault.Gps/
+├── Application/                 # Application layer (CQRS)
+│   ├── Commands/                # Command definitions
+│   ├── CommandHandlers/         # Handlers for commands
+│   ├── Queries/                 # Query definitions
+│   ├── QueryHandlers/           # Handlers for queries
+│   ├── DTOs/                    # Data Transfer Objects
+│   ├── Behaviors/               # MediatR behaviors (validation)
+│   └── Common/                  # Utilities (Result<T>, etc)
+│
+├── Controllers/                 # API Endpoints
+│   └── GpsPositionController.cs
+│
+├── Domain/                      # Business rules
+│   ├── Validators/              # FluentValidation validators
+│   └── Enums/
+│
+├── Infra/                       # Infrastructure layer
+│   └── Database/
+│       ├── Repositories/        # Data access implementations
+│       └── DocumentStoreHolder.cs # RavenDB session management
+│
+├── Contracts/                   # Shared interfaces and models
+│   ├── Models/
+│   ├── Services/
+│   └── Enums/
+│
+├── Extensions/                  # Extension methods for DI
+│   ├── ApplicatonService/
+│   ├── Database/
+│   └── Validations/
+│
+├── Program.cs                   # DI and middleware configuration
+└──appsettings.json             # Configuration
+```
 
 ## ⚙️ How to Run
 
